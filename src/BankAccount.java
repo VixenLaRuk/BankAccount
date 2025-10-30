@@ -39,7 +39,8 @@ public class BankAccount {
         }
     }
 
-    void temp() {
-        
+    int temp() {
+        int temporary = 5;
+        return 1;
     }
 }
