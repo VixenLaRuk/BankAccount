@@ -45,6 +45,6 @@ public class BankAccount {
     }
 
     void temp2() {
-        
+        int hi = 1;
     }
 }
