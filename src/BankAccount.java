@@ -1,27 +1,36 @@
+import java.util.Calendar;
 public class BankAccount {
 
+    private String accountNumber;
     private double balance;
-    StringBuilder transactions;
+    private StringBuilder transactions;
+    private int transactionCount;
 
-    BankAccount() { // default constructor
-        balance = 0.0;
-        transactions = new StringBuilder();
+    public BankAccount(String accountNumber, double initialBalance) { // default constructor
+        this.accountNumber = accountNumber;
+        this.balance = initialBalance;
+        this.transactions = new StringBuilder();
+        this.transactionCount = 0;
+        transactions.append("Account created with initial balance: $")
+                .append(String.format("%.2f", initialBalance))
+                .append(" on ").append(Calendar.getInstance().getTime())
+                .append("\n");
 
     }
 
-    BankAccount(double amount) {
-        balance = amount;
-        transactions = new StringBuilder();
+    public BankAccount(double initialBalance) {
+        this("000000", initialBalance);
     }
 
-    int deposit(double amount) {
-        if (amount < 0) {
-            return -1;
+    public void deposit(double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Deposit amount must be positive.");
         }
-        else {
-            balance += amount;
-            return 1;
-        }
+        balance += amount;
+        Calendar cal = Calendar.getInstance();
+        transactions.append("Transaction ").append(++transactionCount).append(": Deposit: $")
+                .append(String.format("%.2f", amount))
+                .append(" on ").append(cal.getTime()).append("\n");
     }
 
     /**
@@ -29,21 +38,32 @@ public class BankAccount {
      * @param amount
      * @return
      */
-    int withdraw(double amount) throws Exception {
-        if (amount > 0 && balance >= amount) {
-            balance -= amount;
-            return 1;
+    public void withdraw(double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Withdrawal amount must be positive.");
         }
-        else {
-            return -1;
+        if (balance < amount) {
+            throw new IllegalStateException("Insufficient funds. Available balance: $" + 
+            String.format("%.2f", balance)
+             + ", Requested: $" + String.format("%.2f", amount));
         }
+        balance -= amount;
+        Calendar cal = Calendar.getInstance();
+        transactions.append("Transaction ").append(++transactionCount).append(": Withdraw: $")
+                .append(String.format("%.2f", amount))
+                .append(" on ").append(cal.getTime()).append("\n");
     }
 
-    void temp() {
-        
+    public double getBalance() {
+        return balance;
     }
 
-    void temp2() {
-        int hi = 1;
+    public String getStatement() {
+        return transactions.toString();
+    }
+
+    public String getSummary() {
+        return "Account: " + accountNumber + "\nBalance: $" + 
+        String.format("%.2f", balance) + "\nTotal Transactions: " + transactionCount;
     }
 }
