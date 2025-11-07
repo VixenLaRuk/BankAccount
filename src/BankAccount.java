@@ -1,4 +1,16 @@
 import java.util.Calendar;
+/**
+ * This program simulates banking transactions and prints an account
+ * summary and also a full transaction statement.
+ * 
+ * The BankAccount class manages a bank account with features for depositing,
+ * withdrawing, checking balance, and generating transaction statements and summaries.
+ * It uses a StringBuilder to efficiently log transactions with timestamps.
+ * 
+ * @author Vixen La Ruk
+ * @author Isaiah Johnson
+ * @since 11/04/2025
+ */
 public class BankAccount {
 
     private String accountNumber;
@@ -6,6 +18,13 @@ public class BankAccount {
     private StringBuilder transactions;
     private int transactionCount;
 
+    /**
+     * Constructs a new BankAccount with the specified account number and initial balance.
+     * Initializes the transaction log with the account creation event.
+     * 
+     * @param accountNumber the unique account number for this account
+     * @param initialBalance the starting balance, must be non-negative
+     */
     public BankAccount(String accountNumber, double initialBalance) { // default constructor
         this.accountNumber = accountNumber;
         this.balance = initialBalance;
@@ -18,6 +37,12 @@ public class BankAccount {
 
     }
 
+    /**
+     * Constructs a new BankAccount with a default account number ("000000") and the specified initial balance.
+     * This is a convenience constructor that calls the primary constructor.
+     * 
+     * @param initialBalance the starting balance, must be non-negative
+     */
     public BankAccount(double initialBalance) {
         this("000000", initialBalance);
     }
