@@ -25,7 +25,7 @@ public class BankAccount {
      * @param accountNumber the unique account number for this account
      * @param initialBalance the starting balance, must be non-negative
      */
-    public BankAccount(String accountNumber, double initialBalance) { // default constructor
+    public BankAccount(String accountNumber, double initialBalance) { // parameterized constructor
         this.accountNumber = accountNumber;
         this.balance = initialBalance;
         this.transactions = new StringBuilder();
@@ -38,8 +38,8 @@ public class BankAccount {
     }
 
     /**
-     * Constructs a new BankAccount with a default account number ("000000") and the specified initial balance.
-     * This is a convenience constructor that calls the primary constructor.
+     * Constructs a new BankAccount with a default account number ("000000") and the specified
+     * initial balance. This is a convenience constructor that calls the primary constructor.
      * 
      * @param initialBalance the starting balance, must be non-negative
      */
@@ -47,6 +47,13 @@ public class BankAccount {
         this("000000", initialBalance);
     }
 
+    /**
+     * Deposits the specified amount into the account.
+     * Updates the balance and logs the transaction with a timestamp.
+     * 
+     * @param amount the amount to deposit, must be positive
+     * @throws IllegalArgumentException if the amount is not positive
+     */
     public void deposit(double amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Deposit amount must be positive.");
@@ -59,9 +66,12 @@ public class BankAccount {
     }
 
     /**
+     * Withdraws the specified amount from the account.
+     * Updates the balance and logs the transaction with a timestamp.
      * 
-     * @param amount
-     * @return
+     * @param amount the amount to withdraw, must be positive and not exceed the current balance
+     * @throws IllegalArgumentException if the amount is not positive
+     * @throws IllegalStateException if there are insufficient funds
      */
     public void withdraw(double amount) {
         if (amount <= 0) {
@@ -79,14 +89,31 @@ public class BankAccount {
                 .append(" on ").append(cal.getTime()).append("\n");
     }
 
+    /**
+     * Returns the current balance of the account.
+     * 
+     * @return the current balance as a double
+     */
     public double getBalance() {
         return balance;
     }
 
+    /**
+     * Returns a full statement of all transactions performed on the account.
+     * The statement includes the account creation and all deposits/withdrawals with timestamps.
+     * 
+     * @return a string representation of the transaction history
+     */
     public String getStatement() {
         return transactions.toString();
     }
 
+    /**
+     * Returns a summary of the account, including the account number, current balance,
+     * and total transaction count.
+     * 
+     * @return a string summary of the account details
+     */
     public String getSummary() {
         return "Account: " + accountNumber + "\nBalance: $" + 
         String.format("%.2f", balance) + "\nTotal Transactions: " + transactionCount;
